@@ -1,0 +1,62 @@
+# Maintainer: witchlliee <witchlliee@proton.me>
+
+pkgname=heroic-games-launcher
+pkgver=2.22.1
+pkgrel=1
+pkgdesc="An Open source Launcher for Epic, Amazon and GOG Games"
+arch=('x86_64')
+url="https://heroicgameslauncher.com/"
+license=('GPL-3.0-or-later')
+depends=(
+    'zlib'
+    'libgcc'
+    'glibc'
+)
+makedepends=(
+    'desktop-file-utils'
+    'git'
+    'nodejs'
+    'pnpm'
+    'python'
+)
+optdepends=(
+    'gamemode'
+    'gamescope'
+    'mangohud'
+)
+conflicts=("${pkgname}" "${pkgname}-bin")
+source=(
+    "git+https://github.com/Heroic-Games-Launcher/HeroicGamesLauncher.git#tag=v${pkgver}"
+    "fix-exec-heroic-add-to-steam.patch"
+    "fix-exec-heroic-desktop-file.patch"
+)
+sha256sums=('cabb6f90e46f34f4af7388e3ab7c40ddd3502cda73fbeb145d40080d8f76d995'
+            '03a1cf2ad0538b83f002c9769b48d26fd612bb29962cb0ef351ac5a92774ee63'
+            'fee7e2967a4b8edccf2630f59bd9f820619a5a02d3d869184726c2d12a8c9dbf')
+
+prepare() {
+    cd "HeroicGamesLauncher"
+    patch -Np1 -i "../fix-exec-heroic-add-to-steam.patch"
+    patch -Np1 -i "../fix-exec-heroic-desktop-file.patch"
+}
+
+build() {
+    cd "HeroicGamesLauncher"
+    pnpm install
+    pnpm run download-helper-binaries
+    pnpm dist:linux
+}
+
+package() {
+    cd "HeroicGamesLauncher"
+
+    install -d "${pkgdir}/opt/heroic"
+    cp -rf "dist/linux-unpacked/." "${pkgdir}/opt/heroic"
+
+    install -d "${pkgdir}/usr/bin"
+    ln -srv "/opt/heroic/heroic" "${pkgdir}/usr/bin"
+
+    # Desktop file, icon
+    install -Dm644 "flatpak/com.heroicgameslauncher.hgl.desktop" "${pkgdir}/usr/share/applications/com.heroicgameslauncher.hgl.desktop"
+    install -Dm644 "src/frontend/assets/heroic-icon.svg" "${pkgdir}/usr/share/icons/hicolor/scalable/apps/com.heroicgameslauncher.hgl.svg"
+}

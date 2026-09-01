@@ -1,0 +1,28 @@
+pkgbase = heroic-games-launcher
+	pkgdesc = An Open source Launcher for Epic, Amazon and GOG Games
+	pkgver = 2.22.1
+	pkgrel = 1
+	url = https://heroicgameslauncher.com/
+	arch = x86_64
+	license = GPL-3.0-or-later
+	makedepends = desktop-file-utils
+	makedepends = git
+	makedepends = nodejs
+	makedepends = pnpm
+	makedepends = python
+	depends = zlib
+	depends = libgcc
+	depends = glibc
+	optdepends = gamemode
+	optdepends = gamescope
+	optdepends = mangohud
+	conflicts = heroic-games-launcher
+	conflicts = heroic-games-launcher-bin
+	source = git+https://github.com/Heroic-Games-Launcher/HeroicGamesLauncher.git#tag=v2.22.1
+	source = fix-exec-heroic-add-to-steam.patch
+	source = fix-exec-heroic-desktop-file.patch
+	sha256sums = cabb6f90e46f34f4af7388e3ab7c40ddd3502cda73fbeb145d40080d8f76d995
+	sha256sums = 03a1cf2ad0538b83f002c9769b48d26fd612bb29962cb0ef351ac5a92774ee63
+	sha256sums = fee7e2967a4b8edccf2630f59bd9f820619a5a02d3d869184726c2d12a8c9dbf
+
+pkgname = heroic-games-launcher

@@ -1,0 +1,12 @@
+diff --git a/flatpak/com.heroicgameslauncher.hgl.desktop b/flatpak/com.heroicgameslauncher.hgl.desktop
+index 63840084..6d78fdcd 100644
+--- a/flatpak/com.heroicgameslauncher.hgl.desktop
++++ b/flatpak/com.heroicgameslauncher.hgl.desktop
+@@ -1,6 +1,6 @@
+ [Desktop Entry]
+ Name=Heroic Games Launcher
+-Exec=heroic-run %u
++Exec=heroic %u
+ Terminal=false
+ SingleMainWindow=true
+ Type=Application
